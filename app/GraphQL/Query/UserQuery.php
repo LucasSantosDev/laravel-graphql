@@ -19,18 +19,35 @@ class UserQuery extends Query
 
     public function type()
     {
-        return Type::listOf(GraphQL::type('user'));
+        return GraphQL::paginate('user');
     }
 
     public function args()
     {
         return [
-
+            'paginate' => [
+                'type' => Type::int(),
+                'description' => 'Quantidade de registros'
+            ],
+            'page' => [
+                'type' => Type::int(),
+                'description' => 'Paginá especifica'
+            ],
         ];
     }
 
     public function resolve($root, $args, SelectFields $fields, ResolveInfo $info)
     {
-        return User::all();
+        $paginate = 10;
+        if (isset($args['paginate'])) {
+            $paginate = $args['paginate'];
+        }
+
+        $page = 1;
+        if (isset($args['page'])) {
+            $page = $args['page'];
+        }
+
+        return User::paginate($paginate, ['*'], 'page', $page);
     }
 }
