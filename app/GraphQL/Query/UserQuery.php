@@ -14,7 +14,7 @@ class UserQuery extends Query
 {
     protected $attributes = [
         'name' => 'UserQuery',
-        'description' => 'A query for users'
+        'description' => 'CRUD - Usuários'
     ];
 
     public function type()
@@ -48,6 +48,8 @@ class UserQuery extends Query
             $page = $args['page'];
         }
 
-        return User::paginate($paginate, ['*'], 'page', $page);
+        $with = $fields->getRelations();
+
+        return User::with($with)->paginate($paginate, ['*'], 'page', $page);
     }
 }

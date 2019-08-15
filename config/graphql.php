@@ -3,6 +3,9 @@
 use App\GraphQL\Query\UserQuery;
 use App\GraphQL\Type\UserType;
 
+use App\GraphQL\Query\PostQuery;
+use App\GraphQL\Type\PostType;
+
 return [
 
     // The prefix for routes
@@ -21,14 +24,16 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                'users' => UserQuery::class
+                'users' => UserQuery::class,
+                'posts' => PostQuery::class
             ],
             'method' => ['get', 'post']
         ]
     ],
 
     'types' => [
-        'user' => UserType::class
+        'user' => UserType::class,
+        'post' => PostType::class
     ],
 
     'error_formatter' => ['\Rebing\GraphQL\GraphQL', 'formatError'],
